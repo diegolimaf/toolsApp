@@ -11,13 +11,13 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import java.util.Date;
 
 public class postTool extends AppCompatActivity {
 
     private RadioGroup radioGroup;
+    private RadioButton radioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,45 +38,22 @@ public class postTool extends AppCompatActivity {
         EditText date = (EditText)findViewById(R.id.date);
         EditText time = (EditText)findViewById(R.id.time);
 
-        if(TextUtils.isEmpty(title.getText()) || TextUtils.isEmpty(description.getText())){
+        if(TextUtils.isEmpty(title.getText()) || TextUtils.isEmpty(description.getText()) ||
+                TextUtils.isEmpty(date.getText()) || TextUtils.isEmpty(time.getText())){
             if (TextUtils.isEmpty(title.getText()))
-                title.setError("You must choose a title for your ad!");
+                title.setError("Mandatory");
             else if (TextUtils.isEmpty(description.getText()))
-                description.setError("The description is mandatory!");
-        }else{
-            String newTitle = title.getText().toString();
-            String newDescription = description.getText().toString();
-            Spinner dropdown = (Spinner)findViewById(R.id.category);
-            String category = dropdown.getSelectedItem().toString();
-
-            RadioButton rb1 = (RadioButton) findViewById(R.id.yes);
-            boolean  checked = rb1.isChecked();
-
-            if(checked && (TextUtils.isEmpty(time.getText()) || TextUtils.isEmpty(date.getText()))){
-                if(TextUtils.isEmpty(date.getText()))
-                    date.setError("Enter a date!");
-                else if (TextUtils.isEmpty(time.getText()))
-                    time.setError("Enter the time!");
-            }
-            else if(checked && !(TextUtils.isEmpty(time.getText()) || TextUtils.isEmpty(date.getText()))){
-                String newDate = date.getText().toString();
-                String newTime = time.getText().toString();
-                Tool newTool = new Tool(newTitle, newDescription, category, newDate, newTime);
-                System.out.println(newTool.getTitle() + "\n" + newTool.getDate());
-            }
-
-            else{
-                Tool newTool = new Tool(newTitle, newDescription, category);
-                System.out.println(newTool.getTitle() + "\n" + newTool.getDate());
-            }
+                description.setError("Username required");
         }
+
+        Intent myIntent = new Intent(this, home.class);
+        startActivity(myIntent);
+
     }
     public void checkButton(View myView){
 
         EditText date = (EditText)findViewById(R.id.date);
         EditText time = (EditText)findViewById(R.id.time);
-        TextView textDate = findViewById(R.id.textDate);
-        TextView textTime = findViewById(R.id.textTime);
 
         //require to import the RadioButton class
         RadioButton rb1 = (RadioButton) findViewById(R.id.yes);
@@ -93,8 +70,6 @@ public class postTool extends AppCompatActivity {
                 if(checked){
                     date.setVisibility(View.VISIBLE);
                     time.setVisibility(View.VISIBLE);
-                    textDate.setVisibility(View.VISIBLE);
-                    textTime.setVisibility(View.VISIBLE);
                 }
                     break;
 
@@ -102,8 +77,6 @@ public class postTool extends AppCompatActivity {
                 if(checked){
                     date.setVisibility(View.INVISIBLE);
                     time.setVisibility(View.INVISIBLE);
-                    textDate.setVisibility(View.INVISIBLE);
-                    textTime.setVisibility(View.INVISIBLE);
                 }
                     break;
         }
