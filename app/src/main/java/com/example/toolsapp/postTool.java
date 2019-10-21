@@ -92,16 +92,18 @@ public class postTool extends AppCompatActivity {
         String category = dropdown.getSelectedItem().toString();
         EditText date = (EditText)findViewById(R.id.date);
         EditText time = (EditText)findViewById(R.id.time);
-        int selectedId = radioGroup.getCheckedRadioButtonId();
-        radioButton = (RadioButton) findViewById(selectedId);
-        boolean yesOrno = ((radioButton)).isChecked();
+
+        boolean yesOrno = ((RadioButton)myView).isChecked();
+
+
+        System.out.println(yesOrno);
 
         if(TextUtils.isEmpty(title.getText()) || TextUtils.isEmpty(description.getText()) ){
             if(TextUtils.isEmpty(title.getText()))
                 title.setError("Mandatory");
             else if(TextUtils.isEmpty(description.getText()))
                 description.setError("Username required");
-            else if(yesOrno == true && TextUtils.isEmpty(date.getText())  && TextUtils.isEmpty(time.getText())){
+            else if(yesOrno == true && TextUtils.isEmpty(date.getText())  || TextUtils.isEmpty(time.getText())){
                 date.setError("Mandatory");
                 time.setError("Mandatory");
             }
@@ -111,12 +113,14 @@ public class postTool extends AppCompatActivity {
             String category1 = category.toString();
             String newDate = date.getText().toString();
             String newTime = time.getText().toString();
-            if (newDate.equals(null) && newTime.equals(null) ){
-            Tool newtool = new Tool(newTitle, newDescription, category1); }
+            if (!yesOrno){
+            Tool newtool = new Tool(newTitle, newDescription, category1);
+                System.out.println(newtool.getTitle());}
          else {
                 Tool newtool = new Tool(newTitle, newDescription, category1, newDate, newTime);
+                System.out.println(newtool.getTitle());
             }
-            System.out.println();
+            startActivity(post);
         }
     }
 }

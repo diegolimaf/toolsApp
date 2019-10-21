@@ -20,7 +20,7 @@ public class login extends AppCompatActivity
 
     public void signIn(View myView)
     {
-        Intent signIN = new Intent(this, home.class);
+        Intent signIN = new Intent(this, postTool.class);
         EditText username = (EditText) findViewById(R.id.username2);
         EditText password = (EditText) findViewById(R.id.password2);
 

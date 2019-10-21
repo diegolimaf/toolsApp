@@ -22,4 +22,8 @@ public class Tool {
         this.date = date;
         this.time = time;
     }
+
+    public String getTitle() {
+        return title;
+    }
 }
