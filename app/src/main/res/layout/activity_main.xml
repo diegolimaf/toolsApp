@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
         android:onClick="login"
-        android:text="Sing In"
+        android:text="Sign In"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"

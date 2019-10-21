@@ -19,7 +19,7 @@ public class register extends AppCompatActivity {
     }
 
     public void submit(View myView){
-        Intent myIntent = new Intent(this, MainActivity.class);
+        Intent register = new Intent(this, postTool.class);
         EditText name = (EditText)findViewById(R.id.name);
         EditText username = (EditText)findViewById(R.id.username);
         EditText email = (EditText)findViewById(R.id.email);
@@ -48,9 +48,10 @@ public class register extends AppCompatActivity {
             String newPassword = password.getText().toString();
 
             User newUser = new User(newName, newUsername, newEmail, newPassword);
-            myIntent.putExtra("user", newUser);
+            register.putExtra("user", newUser);
 
             System.out.println(newUser.getEmail());
+            startActivity(register);
 
         }
     }
