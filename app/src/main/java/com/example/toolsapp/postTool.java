@@ -38,17 +38,38 @@ public class postTool extends AppCompatActivity {
         EditText date = (EditText)findViewById(R.id.date);
         EditText time = (EditText)findViewById(R.id.time);
 
-        if(TextUtils.isEmpty(title.getText()) || TextUtils.isEmpty(description.getText()) ||
-                TextUtils.isEmpty(date.getText()) || TextUtils.isEmpty(time.getText())){
+        if(TextUtils.isEmpty(title.getText()) || TextUtils.isEmpty(description.getText())){
             if (TextUtils.isEmpty(title.getText()))
-                title.setError("Mandatory");
+                title.setError("You must choose a title for your ad!");
             else if (TextUtils.isEmpty(description.getText()))
-                description.setError("Username required");
+                description.setError("The description is mandatory!");
+        }else{
+            String newTitle = title.getText().toString();
+            String newDescription = description.getText().toString();
+            Spinner dropdown = (Spinner)findViewById(R.id.category);
+            String category = dropdown.getSelectedItem().toString();
+
+            RadioButton rb1 = (RadioButton) findViewById(R.id.yes);
+            boolean  checked = rb1.isChecked();
+
+            if(checked && (TextUtils.isEmpty(time.getText()) || TextUtils.isEmpty(date.getText()))){
+                if(TextUtils.isEmpty(date.getText()))
+                    date.setError("Enter a date!");
+                else if (TextUtils.isEmpty(time.getText()))
+                    time.setError("Enter the time!");
+            }
+            else if(checked && !(TextUtils.isEmpty(time.getText()) || TextUtils.isEmpty(date.getText()))){
+                String newDate = date.getText().toString();
+                String newTime = time.getText().toString();
+                Tool newTool = new Tool(newTitle, newDescription, category, newDate, newTime);
+                System.out.println(newTool.getTitle() + "\n" + newTool.getDate());
+            }
+
+            else{
+                Tool newTool = new Tool(newTitle, newDescription, category);
+                System.out.println(newTool.getTitle() + "\n" + newTool.getDate());
+            }
         }
-
-        Intent myIntent = new Intent(this, home.class);
-        startActivity(myIntent);
-
     }
     public void checkButton(View myView){
 
