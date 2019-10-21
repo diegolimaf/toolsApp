@@ -6,8 +6,8 @@ public class Tool {
     private String title;
     private String description;
     private String category;
-    private int date;
-    private int time;
+    private String date;
+    private String time;
 
     public Tool(String title, String description, String category){
         this.title = title;
@@ -15,11 +15,31 @@ public class Tool {
         this.category = category;
     }
 
-    public Tool(String title, String description, String category, int date, int time){
+    public Tool(String title, String description, String category, String date, String time){
         this.title = title;
         this.description = description;
         this.category = category;
         this.date = date;
         this.time = time;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getTime() {
+        return time;
     }
 }
