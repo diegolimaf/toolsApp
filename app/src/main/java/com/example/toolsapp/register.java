@@ -7,9 +7,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import java.io.Serializable;
 
 public class register extends AppCompatActivity {
 
@@ -51,7 +48,9 @@ public class register extends AppCompatActivity {
             String newPassword = password.getText().toString();
 
             User newUser = new User(newName, newUsername, newEmail, newPassword);
-            myIntent.putExtra("user", (Serializable) newUser);
+            myIntent.putExtra("user", newUser);
+
+            System.out.println(newUser.getEmail());
 
         }
     }
