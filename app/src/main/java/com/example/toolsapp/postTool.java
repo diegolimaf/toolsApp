@@ -13,6 +13,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.Date;
+
 public class postTool extends AppCompatActivity {
 
     private RadioGroup radioGroup;
@@ -104,6 +106,48 @@ public class postTool extends AppCompatActivity {
                     textTime.setVisibility(View.INVISIBLE);
                 }
                     break;
+        }
+    }
+
+
+
+    public void submit(View myView){
+        Intent post = new Intent(this, home.class);
+        EditText title = (EditText)findViewById(R.id.title);
+        EditText description = (EditText)findViewById(R.id.description);
+        Spinner dropdown = (Spinner)findViewById(R.id.category);
+        String category = dropdown.getSelectedItem().toString();
+        EditText date = (EditText)findViewById(R.id.date);
+        EditText time = (EditText)findViewById(R.id.time);
+
+        boolean yesOrno = ((RadioButton)myView).isChecked();
+
+
+        System.out.println(yesOrno);
+
+        if(TextUtils.isEmpty(title.getText()) || TextUtils.isEmpty(description.getText()) ){
+            if(TextUtils.isEmpty(title.getText()))
+                title.setError("Mandatory");
+            else if(TextUtils.isEmpty(description.getText()))
+                description.setError("Username required");
+            else if(yesOrno == true && TextUtils.isEmpty(date.getText())  || TextUtils.isEmpty(time.getText())){
+                date.setError("Mandatory");
+                time.setError("Mandatory");
+            }
+        }else{
+            String newTitle = title.getText().toString();
+            String newDescription = description.getText().toString();
+            String category1 = category.toString();
+            String newDate = date.getText().toString();
+            String newTime = time.getText().toString();
+            if (!yesOrno){
+            Tool newtool = new Tool(newTitle, newDescription, category1);
+                System.out.println(newtool.getTitle());}
+         else {
+                Tool newtool = new Tool(newTitle, newDescription, category1, newDate, newTime);
+                System.out.println(newtool.getTitle());
+            }
+            startActivity(post);
         }
     }
 }
