@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.Date;
 
@@ -75,6 +76,8 @@ public class postTool extends AppCompatActivity {
 
         EditText date = (EditText)findViewById(R.id.date);
         EditText time = (EditText)findViewById(R.id.time);
+        TextView textDate = (TextView)findViewById(R.id.textDate);
+        TextView textTime = (TextView)findViewById(R.id.textTime);
 
         //require to import the RadioButton class
         RadioButton rb1 = (RadioButton) findViewById(R.id.yes);
@@ -91,6 +94,8 @@ public class postTool extends AppCompatActivity {
                 if(checked){
                     date.setVisibility(View.VISIBLE);
                     time.setVisibility(View.VISIBLE);
+                    textDate.setVisibility(View.VISIBLE);
+                    textTime.setVisibility(View.VISIBLE);
                 }
                     break;
 
@@ -98,6 +103,8 @@ public class postTool extends AppCompatActivity {
                 if(checked){
                     date.setVisibility(View.INVISIBLE);
                     time.setVisibility(View.INVISIBLE);
+                    textDate.setVisibility(View.INVISIBLE);
+                    textTime.setVisibility(View.INVISIBLE);
                 }
                     break;
         }
