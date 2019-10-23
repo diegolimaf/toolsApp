@@ -1,12 +1,15 @@
 package com.example.toolsapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class register extends AppCompatActivity {
 
@@ -19,7 +22,7 @@ public class register extends AppCompatActivity {
     }
 
     public void submit(View myView){
-        Intent register = new Intent(this, postTool.class);
+        final Intent register = new Intent(this, login.class);
         EditText name = (EditText)findViewById(R.id.name);
         EditText username = (EditText)findViewById(R.id.username);
         EditText email = (EditText)findViewById(R.id.email);
@@ -31,15 +34,15 @@ public class register extends AppCompatActivity {
                 !password.getText().toString().equals(confPass.getText().toString())){
             if(TextUtils.isEmpty(name.getText()))
                 name.setError("Mandatory");
-            else if(TextUtils.isEmpty(username.getText()))
+            if(TextUtils.isEmpty(username.getText()))
                 username.setError("Username required");
-            else if(TextUtils.isEmpty(email.getText()))
+            if(TextUtils.isEmpty(email.getText()))
                 email.setError("You must enter an email!");
-            else if(TextUtils.isEmpty(password.getText()))
+            if(TextUtils.isEmpty(password.getText()))
                 password.setError("Password required");
-            else if(TextUtils.isEmpty(confPass.getText()))
+            if(TextUtils.isEmpty(confPass.getText()))
                 confPass.setError("You must confirm your password");
-            else if(!password.getText().toString().equals(confPass.getText().toString()))
+            if(!password.getText().toString().equals(confPass.getText().toString()))
                 confPass.setError("Password is not the same!");
         }else{
             String newName = name.getText().toString();
@@ -50,9 +53,16 @@ public class register extends AppCompatActivity {
             User newUser = new User(newName, newUsername, newEmail, newPassword);
             register.putExtra("user", newUser);
 
-            System.out.println(newUser.getEmail());
-            startActivity(register);
-
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Tollshare");
+            alert.setMessage("User created with success. \nYou can login now!");
+            alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startActivity(register);
+                }
+            });
+            alert.create().show();
         }
     }
 }

@@ -1,7 +1,9 @@
 package com.example.toolsapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,7 +19,7 @@ import java.util.Date;
 
 public class postTool extends AppCompatActivity {
 
-    private RadioGroup radioGroup;
+    RadioGroup radioGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +31,13 @@ public class postTool extends AppCompatActivity {
         dropdown.setAdapter(adapter);
 
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
-
     }
 
     public void post(View myView) {
+        final Intent homeIntent = new Intent(this, home.class);
+        final Intent postAgain = new Intent(this, postTool.class);
 
-        EditText title = (EditText) findViewById(R.id.title);
+        EditText title = findViewById(R.id.title);
         EditText description = (EditText) findViewById(R.id.description);
         EditText date = (EditText) findViewById(R.id.date);
         EditText time = (EditText) findViewById(R.id.time);
@@ -53,6 +56,22 @@ public class postTool extends AppCompatActivity {
             RadioButton rb1 = (RadioButton) findViewById(R.id.yes);
             boolean checked = rb1.isChecked();
 
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Tollshare");
+            alert.setMessage("Tool posted with success. \nWould you like to post another tool?");
+            alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startActivity(postAgain);
+                }
+            });
+            alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startActivity(homeIntent);
+                }
+            });
+
             if (checked && (TextUtils.isEmpty(time.getText()) || TextUtils.isEmpty(date.getText()))) {
                 if (TextUtils.isEmpty(date.getText()))
                     date.setError("Enter a date!");
@@ -62,10 +81,10 @@ public class postTool extends AppCompatActivity {
                 String newDate = date.getText().toString();
                 String newTime = time.getText().toString();
                 Tool newTool = new Tool(newTitle, newDescription, category, newDate, newTime);
-                System.out.println(newTool.getTitle() + "\n" + newTool.getDate());
+                alert.create().show();
             } else {
                 Tool newTool = new Tool(newTitle, newDescription, category);
-                System.out.println(newTool.getTitle() + "\n" + newTool.getDate());
+                alert.create().show();
             }
         }
     }
@@ -77,15 +96,8 @@ public class postTool extends AppCompatActivity {
         TextView textDate = findViewById(R.id.textDate);
         TextView textTime = findViewById(R.id.textTime);
 
-        //require to import the RadioButton class
-        RadioButton rb1 = (RadioButton) findViewById(R.id.yes);
-        RadioButton rb2 = (RadioButton) findViewById(R.id.no);
-
-        //is the current radio button now checked?
         boolean checked = ((RadioButton) myView).isChecked();
 
-        //now check which radio button is selected
-        //android switch statement
         switch (myView.getId()) {
 
             case R.id.yes:

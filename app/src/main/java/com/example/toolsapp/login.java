@@ -18,18 +18,21 @@ public class login extends AppCompatActivity
     }
 
     public void signIn(View myView){
-        Intent signIN = new Intent(this, postTool.class);
+        Intent myIntent = new Intent(this, home.class);
         EditText username = (EditText) findViewById(R.id.username2);
         EditText password = (EditText) findViewById(R.id.password2);
 
         if (TextUtils.isEmpty(username.getText()) || TextUtils.isEmpty(password.getText())){
             if (TextUtils.isEmpty(username.getText()))
-                username.setError("Username cannot be empty.");
+                username.setError("Please enter an username.");
             else
-                password.setError("Password cannot be empty.");
+                password.setError("Please enter a password.");
         }else{
-            SignIn log = new SignIn();
-            startActivity(signIN);
+            String newUsername = username.getText().toString();
+            String newPassword = password.getText().toString();
+
+            SignIn log = new SignIn(newUsername, newPassword);
+            startActivity(myIntent);
         }
     }
 }
