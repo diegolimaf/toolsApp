@@ -23,9 +23,9 @@ public class login extends AppCompatActivity
         EditText password = (EditText) findViewById(R.id.password2);
 
         if (TextUtils.isEmpty(username.getText()) || TextUtils.isEmpty(password.getText())){
-            if (TextUtils.isEmpty(username.getText()))
+            if(TextUtils.isEmpty(username.getText()))
                 username.setError("Please enter an username.");
-            else
+            if(TextUtils.isEmpty(username.getText()))
                 password.setError("Please enter a password.");
         }else{
             String newUsername = username.getText().toString();

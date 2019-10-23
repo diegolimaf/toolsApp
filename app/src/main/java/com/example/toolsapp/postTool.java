@@ -3,24 +3,31 @@ package com.example.toolsapp;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
 public class postTool extends AppCompatActivity {
 
     RadioGroup radioGroup;
 
+    @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +38,20 @@ public class postTool extends AppCompatActivity {
         dropdown.setAdapter(adapter);
 
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+
+        ImageView image = (ImageView)findViewById(R.id.previewImage);
+
+        //encode image to base64 string
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.missingicon);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+
+        //decode base64 string to image
+        imageBytes = Base64.decode(imageString, Base64.DEFAULT);
+        Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+        image.setImageBitmap(decodedImage);
     }
 
     public void post(View myView) {
@@ -45,7 +66,7 @@ public class postTool extends AppCompatActivity {
         if (TextUtils.isEmpty(title.getText()) || TextUtils.isEmpty(description.getText())) {
             if (TextUtils.isEmpty(title.getText()))
                 title.setError("You must choose a title for your ad!");
-            else if (TextUtils.isEmpty(description.getText()))
+            if (TextUtils.isEmpty(description.getText()))
                 description.setError("The description is mandatory!");
         } else {
             String newTitle = title.getText().toString();
@@ -58,7 +79,6 @@ public class postTool extends AppCompatActivity {
 
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Tollshare");
-            alert.setMessage("Tool posted with success. \nWould you like to post another tool?");
             alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -75,15 +95,17 @@ public class postTool extends AppCompatActivity {
             if (checked && (TextUtils.isEmpty(time.getText()) || TextUtils.isEmpty(date.getText()))) {
                 if (TextUtils.isEmpty(date.getText()))
                     date.setError("Enter a date!");
-                else if (TextUtils.isEmpty(time.getText()))
+                if (TextUtils.isEmpty(time.getText()))
                     time.setError("Enter the time!");
             } else if (checked && !(TextUtils.isEmpty(time.getText()) || TextUtils.isEmpty(date.getText()))) {
                 String newDate = date.getText().toString();
                 String newTime = time.getText().toString();
                 Tool newTool = new Tool(newTitle, newDescription, category, newDate, newTime);
+                alert.setMessage("You have posted the tool: " + newTool.getTitle() + "\nWould you like to post another tool?");
                 alert.create().show();
             } else {
                 Tool newTool = new Tool(newTitle, newDescription, category);
+                alert.setMessage("You have posted the tool: " + newTool.getTitle() + "\nWould you like to post another tool?");
                 alert.create().show();
             }
         }

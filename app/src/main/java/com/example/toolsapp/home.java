@@ -18,16 +18,13 @@ public class home extends AppCompatActivity {
         Intent myIntent = new Intent(this, postTool.class);
         startActivity(myIntent);
     }
-    public void homePage(View myView){
-        Intent myIntent = new Intent(this, postTool.class);
-        startActivity(myIntent);
-    }
+
     public void myToolBox(View myView){
         Intent myIntent = new Intent(this, postTool.class);
         startActivity(myIntent);
     }
     public void messages(View myView){
-        Intent myIntent = new Intent(this, postTool.class);
+        Intent myIntent = new Intent(this, message.class);
         startActivity(myIntent);
     }
     public void profile(View myView){

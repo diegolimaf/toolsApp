@@ -8,6 +8,7 @@ public class Tool {
     private String category;
     private String date;
     private String time;
+    private String photo;
 
     public Tool(String title, String description, String category){
         this.title = title;
